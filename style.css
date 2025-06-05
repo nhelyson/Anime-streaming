@@ -1,0 +1,123 @@
+*,*::after,*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+ .input{
+ position: relative;
+ top: 5rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ }
+
+ .custom-a{
+  color: rgb(188, 190, 220);
+ }
+
+ .custom-a:hover{
+  color: white;
+  transition: all 0.3s ease-in;
+ }
+ 
+ .custom-border{
+  border: 1px solid green;
+ }
+  #search_fetch{
+ width: 55rem;
+ height: 3rem;
+ background-color: white;
+ text-indent: 20px;
+ border-radius: 5px;
+ }
+  #search_fetch::placeholder{
+ font-size: 1.5rem;
+        }
+.image_character {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.menu-spawn{
+    display: flex!important;
+    gap: 29px;
+    top: 0;
+    left: 0;
+    transition: top 0.7s ease-in;
+}
+.menu {
+  width: 90%;
+  max-width: 350px;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  background-color: white;
+  display: none;
+}
+
+.menu-spawn {
+  display: block !important;
+}
+
+.menu svg {
+  color: #6c757d;
+  margin-bottom: 0.3rem;
+}
+
+.menu a {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.menu .d-flex {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  justify-items: center;
+}
+
+.custom-color {
+  color: rgb(220, 215, 215)!important;
+  font-weight: 600!important;
+}
+
+.custom-hover:hover{
+  color: rgb(107, 107, 206)!important;
+}
+
+.contains-historique.active_historique{
+  display: block!important;
+}
+
+@media  only screen and (max-width:1000px) {
+.releve{
+        position: relative;
+        top: -10rem!important;
+    }    
+}
+
+@media  only screen and (max-width:768px) {
+    .over{
+        overflow: scroll;
+        overflow-y: hidden;
+    }
+    .custom-none{
+        display: none;
+    }
+    .custom-display{
+        display: block!important;
+    }
+    .over-width{
+        padding-top:0!important;
+    }
+}
+
+@media  only screen and (max-width:500px) {
+    .over-block{
+        display: block!important;
+    }
+}
