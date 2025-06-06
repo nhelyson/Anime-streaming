@@ -1,67 +1,103 @@
 if (document.getElementById("body_search")) {
-  function view(url, line) {
+ let perPage = 20;
+let passenger = 0;
+
+function view(urlBase, line) {
+  const offset = passenger * perPage;
+  const url = `${urlBase}&page[limit]=${perPage}&page[offset]=${offset}`;
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
       const animes = data.data;
-      let row = line; 
-      row.innerHTML = ""; 
 
+      // Crée le bouton "Charger plus" une seule fois
+      let load = document.getElementById("loadMoreButton");
+      if (!load) {
+        load = document.createElement("button");
+        load.id = "loadMoreButton";
+        load.className = "btn btn-primary my-3 d-block mx-auto";
+        load.textContent = "Charger plus";
+        line.parentNode.appendChild(load);
+        let count = 2
+        let descr = 1
+        let descr_2 = 1
+        load.addEventListener("click", () => {
+          passenger += 1;
+          passenger += count
+          passenger -=descr
+          passenger -= descr_2
+          load.innerHTML = passenger
+          view(urlBase, line);
+        });
+      }
+
+      // Ajouter les nouveaux animes sans effacer les précédents
       animes.forEach(anime => {
-      const div = document.createElement('div');
-      div.className = "col-5 col-lg-3 col-md-5 col-sm-4 align-items-stretch";
+        const div = document.createElement("div");
+        div.className = "col-5 col-lg-3 col-md-5 col-sm-4 align-items-stretch";
 
-      const card = document.createElement('div');
-      card.className = "card border-0";
+        const card = document.createElement("div");
+        card.className = "card border-0";
 
-      const div_body = document.createElement('div');
-      div_body.className = "card-body";
+        const img = document.createElement("img");
+        img.className = "img-fluid";
+        img.style.objectFit = "cover";
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.src = anime.attributes.posterImage?.large || "";
+        img.alt = anime.attributes.canonicalTitle;
 
-      const img = document.createElement('img');
-      img.className = "img-fluid";
-      img.style.objectFit = "cover";
-      img.style.width = "100%";
-      img.style.height = "100%";
-      img.src = anime.attributes.posterImage?.large || "";
-      img.alt = anime.attributes.canonicalTitle;
+        const div_title = document.createElement("p");
+        div_title.className = "mt-3 fw-bold";
+        div_title.style.fontSize = "0.9rem";
+        div_title.textContent = anime.attributes.canonicalTitle;
 
-      const div_title = document.createElement('p');
-      div_title.className = "mt-3 fw-bold";
-      div.setAttribute("style", "font-size:0.9rem");
-      div_title.innerHTML = anime.attributes.canonicalTitle;
+        card.appendChild(img);
+        card.appendChild(div_title);
+        div.appendChild(card);
+        line.appendChild(div);
 
-      card.appendChild(img);
-      card.appendChild(div_title);
-      div.appendChild(card);
-      row.appendChild(div);
-      div.addEventListener("click", () => {
+        div.addEventListener("click", () => {
+            const history = {
+           Anime_title: anime.attributes.titles.en || Anime.attributes.canonicalTitle,
+           Anime_image: img.src,
+           Anime_id:anime.id
+           };
+          
+    
+          let historique_recept = JSON.parse(localStorage.getItem('historique')) || [];
+          historique_recept.unshift(history);
+          localStorage.setItem('historique', JSON.stringify(historique_recept));
+          
           window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
         });
       });
     })
-    .catch(err => {
-      console.error("Erreur :", err);
+    .catch(error => {
+      console.error("Erreur lors du chargement :", error);
     });
-  } 
-  fetch("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&page[limit]=4&sort=popularityRank")
+}
+
+fetch("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&page[limit]=4&sort=popularityRank")
   .then(res => res.json())
   .then(data => {
     const animes = data.data;
     const row = document.getElementById("Anime");
     row.innerHTML = "";
-    const button_view = document.createElement('button')
-    button_view.className = "btn btn-transparent text-end border-0 ms-auto me-2"
-    button_view.style.width = "5rem"
-    button_view.textContent = "view all"
+
+    const button_view = document.createElement('button');
+    button_view.className = "btn btn-transparent text-end border-0 ms-auto me-2";
+    button_view.style.width = "5rem";
+    button_view.textContent = "view all";
+
     animes.forEach(anime => {
       const div = document.createElement('div');
       div.className = "col-3 col-lg-3 col-md-5 col-sm-2";
 
       const card = document.createElement('div');
       card.className = "card border-0";
-
-      const div_body = document.createElement('div');
-      div_body.className = "card-body";
+      card.style.cursor = "pointer";
 
       const img = document.createElement('img');
       img.className = "img-fluid";
@@ -80,15 +116,22 @@ if (document.getElementById("body_search")) {
       card.appendChild(div_title);
       div.appendChild(card);
       row.appendChild(div);
-      row.appendChild(button_view)
+
       div.addEventListener("click", () => {
-      window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
+        window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
       });
-       button_view.addEventListener("click" , function(){
-        view("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&page[limit]=20&sort=popularityRank", document.getElementById("Anime"))
-      })
     });
-   })
+
+    row.appendChild(button_view);
+
+  button_view.addEventListener("click", function () {
+  row.innerHTML = "";
+  passenger = 0; // on réinitialise pour partir de la première page
+  view(`https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&sort=popularityRank`, document.getElementById("Anime"));
+  passenger = 1;
+});
+
+  })
   .catch(err => {
     console.error("Erreur :", err);
   });

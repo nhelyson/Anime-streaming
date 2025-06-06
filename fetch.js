@@ -184,11 +184,28 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     const alternative_name = document.querySelector(".alternative_name");
     title.removeChild(alternative_name);
     })
+    const descript = Anime_search.attributes.synopsis || "Description indisponible";
+    console.log(descript)
    const description = document.getElementById("description_Anime");
-   description.innerHTML = Anime_search.attributes.synopsis || "Description indisponible";
-   description.style.fontFamily = "Arial, sans-serif";
-   description.style.fontSize = "0.9rem";
-   description.style.lineHeight = "1.5";
+   
+  fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(descript)}`)
+  .then(res => res.json())
+  .then(data => {
+
+    const segments = data[0];
+
+    const traductionComplete = segments.map(segment => segment[0]).join(' ');
+    
+    console.log(traductionComplete);
+    description.style.fontFamily = "Arial, sans-serif";
+    description.style.fontSize = "0.9rem";
+    description.style.lineHeight = "1.5";
+    description.innerHTML = traductionComplete;
+  })
+  .catch(error => {
+    console.error("Erreur :", error);
+    document.getElementById("resultat").inne = "Une erreur s'est produite.";
+  });
  })
 
  const query = `
