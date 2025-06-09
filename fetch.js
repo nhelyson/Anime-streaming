@@ -17,11 +17,11 @@
       console.log(receive);
       if (receive.length > 0) {
        div.innerHTML = '';
-            div.style.display = "block"
-        div.className = "border rounded-3 p-4 bg-white mx-auto mt-5";
-        div.style.position = "fixed";
-        div.style.top = "12rem";
-        div.style.left = "19.5rem"; 
+        div.style.display = "block"
+        div.className = "border rounded-3 p-4 bg-white mx-auto mt-5 me-auto";
+        div.style.position = "absolute";
+        div.style.top = "2rem";
+        div.style.left = "0.2rem"; 
         div.style.width = "30rem"; 
         div.style.maxHeight = "70vh"; 
         div.style.overflowY = "auto"; 
@@ -150,7 +150,7 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
    title.addEventListener("mouseenter", function() {
     const alternative_name = document.createElement("div")
     alternative_name.className = "alternative_name  position-absolute bg-light p-5 rounded-2";
-    alternative_name.setAttribute('style', "left:8rem; top:-2rem;")
+    alternative_name.setAttribute('style', "left:8rem; top:-2rem;z-index:1000000;")
     alternative_name.style.transition = "all 2s ease-in"
     const ul = document.createElement('ul')
     ul.className = "d-flex flex-column justify-content-center align-items-center text-muted"
@@ -185,8 +185,7 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     title.removeChild(alternative_name);
     })
     const descript = Anime_search.attributes.synopsis || "Description indisponible";
-    console.log(descript)
-   const description = document.getElementById("description_Anime");
+    const description = document.getElementById("description_Anime");
    
   fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(descript)}`)
   .then(res => res.json())
@@ -195,8 +194,6 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     const segments = data[0];
 
     const traductionComplete = segments.map(segment => segment[0]).join(' ');
-    
-    console.log(traductionComplete);
     description.style.fontFamily = "Arial, sans-serif";
     description.style.fontSize = "0.9rem";
     description.style.lineHeight = "1.5";
@@ -347,8 +344,8 @@ fetch("https://graphql.anilist.co", {
     }else{
        svg.innerHTML = `No classified`
     }
-    video_trailer.className = "position-relative text-center"
-    video_trailer.setAttribute("style", "overflow: hidden;width:16rem!important; height: 5rem!important;border-radius: 0.5rem!important;")
+    video_trailer.className = "position-relative text-center custom-over"
+    video_trailer.setAttribute("style", "overflow: hidden;width:16rem; height: 5rem;border-radius: 0.5rem!important;")
     video_trailer.innerHTML = `<img src="${data.data.Media.coverImage.large}" style="object-fit: cover; width: 100%; 
     height: 100%;filter:brightness(0.5)!important" class="img-fluid">
     <p class="text-muted  fs-1 position-absolute" style="top:50%; left:50%; transform:translate(-50%,-50%);
@@ -361,13 +358,45 @@ fetch("https://graphql.anilist.co", {
       let ifr = ""
       if(data.data.Media.trailer!== null){
         ifr = data.data.Media.trailer.id
-      }else{
+      }else if(!data.data.Media.trailer!== null){
         fetch(`https://kitsu.io/api/edge/anime?filter[text]=${Anime_name}`)
        .then(response => response.json())
        .then(data => {
-       const anime = data.data[0]; 
-       ifr = anime.attributes.youtubeVideoId;
-       console.log(anime)
+       const anime = data.data[0];
+       div.innerHTML = "" 
+       const iframe = document.createElement('div');
+       iframe.setAttribute("style", "top:0!important; left:0!important;")
+
+      iframe.innerHTML = iframe.innerHTML = iframe.innerHTML = `<iframe
+      src="https://www.youtube.com/embed/${anime.attributes.youtubeVideoId}?autoplay=1&loop=1"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      style="
+        width: 70vw !important;
+        height: calc(80vw * 9 / 16) !important;
+        max-width: 1280px !important;
+        max-height: 720px !important;
+        border: none !important;
+        display: block !important;
+      "
+      ></iframe>`;
+
+      iframe.style.transition = "all 1s ease-in-out";
+      div.style.position = "fixed";
+      div.style.display = "flex";
+      div.style.justifyContent = "center";
+      div.style.alignItems = "center";
+      div.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+      div.style.zIndex = "11000";
+      div.style.top = "0";
+      div.style.left = "0";
+      div.style.width = "100%";
+      div.style.height = "100%";
+      div.style.transition = "all 0.3s ease-in-out";
+      div.appendChild(iframe);
+      document.body.appendChild(div);
     
       });
 
@@ -407,9 +436,9 @@ fetch("https://graphql.anilist.co", {
     })
 
     const news_anime = document.querySelector('.news-anime')
-    news_anime.innerHTML = '<span class="ms-2 fw-bold" >Details animes</span>'
-    news_anime.setAttribute('style', "width:16rem!important")
-    news_anime.className = "mt-2 bg-white p-4 custom-well"
+    news_anime.innerHTML = '<span class="ms-2 fw-bold">Details animes</span>'
+    news_anime.setAttribute('style', "width:16rem;")
+    news_anime.className = "mt-2 bg-white p-4 custom-well d-flex flex-lg-column flex-md-row flex-row custom-over"
     news_anime.style
     let name_studios = ""
 

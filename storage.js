@@ -1,42 +1,41 @@
 if (document.getElementById("body_search")) {
  let perPage = 20;
-let passenger = 0;
+ let passenger = 0;
 
-function view(urlBase, line) {
+function view(urlBase, line , contains_bouton) {
+  contains_bouton.innerHTML = ""
   const offset = passenger * perPage;
+  console.log(offset)
   const url = `${urlBase}&page[limit]=${perPage}&page[offset]=${offset}`;
-
+  console.log(offset)
   fetch(url)
     .then(res => res.json())
     .then(data => {
       const animes = data.data;
+      let meta = data.meta.count
+      let count = Math.ceil(meta/perPage)
+      let reload = document.getElementById("back")
+       if (!reload) {
+        reload = document.createElement("button");
+        reload.id = "back";
+        reload.className = "btn btn-transparent border bg-light me-3";
+        reload.textContent = "precedent";
+        reload.style.fontSize = "0.9rem"
+        contains_bouton.appendChild(reload);
+        reload.addEventListener("click", () => {
+        if (passenger >1) {
+          passenger -= 1;
+          view(urlBase, line, contains_bouton);
+        }
 
-      // Crée le bouton "Charger plus" une seule fois
-      let load = document.getElementById("loadMoreButton");
-      if (!load) {
-        load = document.createElement("button");
-        load.id = "loadMoreButton";
-        load.className = "btn btn-primary my-3 d-block mx-auto";
-        load.textContent = "Charger plus";
-        line.parentNode.appendChild(load);
-        let count = 2
-        let descr = 1
-        let descr_2 = 1
-        load.addEventListener("click", () => {
-          passenger += 1;
-          passenger += count
-          passenger -=descr
-          passenger -= descr_2
-          load.innerHTML = passenger
-          view(urlBase, line);
-        });
+      });
+      
       }
-
       // Ajouter les nouveaux animes sans effacer les précédents
       animes.forEach(anime => {
         const div = document.createElement("div");
-        div.className = "col-5 col-lg-3 col-md-5 col-sm-4 align-items-stretch";
-
+        div.className = "col";
+        div.style.cursor = "pointer"
         const card = document.createElement("div");
         card.className = "card border-0";
 
@@ -69,10 +68,50 @@ function view(urlBase, line) {
           let historique_recept = JSON.parse(localStorage.getItem('historique')) || [];
           historique_recept.unshift(history);
           localStorage.setItem('historique', JSON.stringify(historique_recept));
-          
+
           window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
         });
       });
+       const count_page = document.createElement("button")
+       for(i=1; i<=count; i++){
+        const pagination = document.createElement("button")
+        pagination.className = "btn text-dark"
+        pagination.innerHTML = `${i}`
+        pagination.dataset.number= `${i}`
+        contains_bouton.appendChild(pagination)
+        pagination.addEventListener("click", function(){
+        line.innerHTML = ""
+        passenger=0
+        passenger += parseInt(this.textContent)
+         view(urlBase, line, contains_bouton);
+        })
+        
+        if(passenger === parseInt(pagination.textContent)){
+          pagination.style.border = "2px solid red"
+          pagination.className = "btn text-dark"
+        }
+      }
+
+       // Crée le bouton "Charger plus" une seule fois
+      let load = document.getElementById("loadMoreButton");
+      if (!load) {
+        load = document.createElement("button");
+        load.id = "loadMoreButton";
+        load.className = "btn btn-transparent border text-dark bg-white";
+        load.style.fontSize = "0.9rem"
+        load.textContent = "suivant";
+        contains_bouton.appendChild(load);
+        load.addEventListener("click", () => {
+           passenger += 1;
+          if(passenger >=count){
+           load.setAttribute("disabled", "true");
+          }
+              view(urlBase, line, contains_bouton);
+        });
+      }
+      count_page.className = "btn text-dark mt-3"
+      count_page.innerHTML = `<p class="">Page:${passenger}/${count}</p>`
+      contains_bouton.appendChild(count_page)
     })
     .catch(error => {
       console.error("Erreur lors du chargement :", error);
@@ -83,24 +122,26 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV
   .then(res => res.json())
   .then(data => {
     const animes = data.data;
+    const btn =  document.getElementById("btn-place")
     const row = document.getElementById("Anime");
     row.innerHTML = "";
 
     const button_view = document.createElement('button');
     button_view.className = "btn btn-transparent text-end border-0 ms-auto me-2";
-    button_view.style.width = "5rem";
-    button_view.textContent = "view all";
+    button_view.style.fontSize = "1rem"
+    button_view.style.width = "6rem";
+    button_view.textContent = "voir plus";
 
     animes.forEach(anime => {
       const div = document.createElement('div');
-      div.className = "col-3 col-lg-3 col-md-5 col-sm-2";
+      div.className = "col";
 
       const card = document.createElement('div');
       card.className = "card border-0";
       card.style.cursor = "pointer";
 
       const img = document.createElement('img');
-      img.className = "img-fluid";
+      img.className = "img-fluid img";
       img.style.objectFit = "cover";
       img.style.width = "100%";
       img.style.height = "100%";
@@ -122,12 +163,15 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV
       });
     });
 
-    row.appendChild(button_view);
+    btn.appendChild(button_view);
 
   button_view.addEventListener("click", function () {
   row.innerHTML = "";
+  btn.remove()
   passenger = 0; // on réinitialise pour partir de la première page
-  view(`https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&sort=popularityRank`, document.getElementById("Anime"));
+  view(`https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&sort=popularityRank`, 
+       document.getElementById("Anime"),
+       document.getElementById("pagination"));
   passenger = 1;
 });
 

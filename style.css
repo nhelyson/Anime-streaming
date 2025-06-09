@@ -41,45 +41,6 @@
   height: 100px;
   overflow: hidden;
 }
-
-.menu-spawn{
-    display: flex!important;
-    gap: 29px;
-    top: 0;
-    left: 0;
-    transition: top 0.7s ease-in;
-}
-.menu {
-  width: 90%;
-  max-width: 350px;
-  border-radius: 1rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-  background-color: white;
-  display: none;
-}
-
-.menu-spawn {
-  display: block !important;
-}
-
-.menu svg {
-  color: #6c757d;
-  margin-bottom: 0.3rem;
-}
-
-.menu a {
-  display: block;
-  font-size: 0.9rem;
-}
-
-.menu .d-flex {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  justify-items: center;
-}
-
 .custom-color {
   color: rgb(220, 215, 215)!important;
   font-weight: 600!important;
@@ -93,17 +54,45 @@
   display: block!important;
 }
 
+@media  only screen and (max-width:1199px) {
+  .custom-push{
+    margin-left: 70px;
+  }
+  .custom-marge{
+   margin-top: -1rem!important;
+  }
+}
 @media  only screen and (max-width:1000px) {
+  .custom-marge{
+   margin-top: -8rem!important;
+  }
+.reserves{
+    margin-top: 0!important;
+  }
 .releve{
         position: relative;
         top: -10rem!important;
-    }    
+    } 
+    .custom-over{
+      width: 100%!important;
+    }   
 }
 
+@media  only screen and (max-width:840px) {
+    .custom-over{
+      width: 100%!important;
+      overflow:scroll;
+      overflow-y:hidden;
+    }   
+}
 @media  only screen and (max-width:768px) {
-    .over{
-        overflow: scroll;
-        overflow-y: hidden;
+   .custom-push{
+    margin-left: 0;
+  }
+    .custom-over{
+      width: 100%!important;
+      overflow:scroll;
+      overflow-y:hidden;
     }
     .custom-none{
         display: none;
