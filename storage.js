@@ -127,11 +127,6 @@ if (document.getElementById("body_search")) {
           view(urlBase, line, contains_bouton);
         });
       }
-
-      const count_page = document.createElement("button");
-      count_page.className = "btn text-dark mt-3 ms-auto";
-      count_page.innerHTML = `<p class="">Page:${passenger}/${count}</p>`;
-      contains_bouton.appendChild(count_page);
     })
     .catch(error => {
       console.error("Erreur lors du chargement :", error);
