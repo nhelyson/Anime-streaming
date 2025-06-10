@@ -325,7 +325,7 @@ const div = document.createElement('div');
 div.className = "menu-queries"
 
 const ul = document.createElement('ul');
-ul.className = 'p-2 bg-danger w-50'
+ul.className = 'p-2 w-50'
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.gap = "20px"; 
