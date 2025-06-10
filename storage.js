@@ -78,15 +78,6 @@ if (document.getElementById("body_search")) {
       const startPage = Math.max(1, passenger - 1);
       const endPage = Math.min(count, passenger + 1);
 
-      const firstBtn = document.createElement("button");
-      firstBtn.textContent = "<<";
-      firstBtn.className = "btn btn-outline-dark me-1";
-      firstBtn.addEventListener("click", () => {
-        passenger = 1;
-        view(urlBase, line, contains_bouton);
-      });
-      contains_bouton.appendChild(firstBtn);
-
       for (let i = 1; i <= count; i++) {
         if (i === 1 || i === count || (i >= startPage && i <= endPage)) {
           const pagination = document.createElement("button");
@@ -115,15 +106,6 @@ if (document.getElementById("body_search")) {
           contains_bouton.appendChild(dots);
         }
       }
-
-      const lastBtn = document.createElement("button");
-      lastBtn.textContent = ">>";
-      lastBtn.className = "btn btn-outline-dark ms-1";
-      lastBtn.addEventListener("click", () => {
-        passenger = count;
-        view(urlBase, line, contains_bouton);
-      });
-      contains_bouton.appendChild(lastBtn);
 
       let load = document.getElementById("loadMoreButton");
       if (!load) {
