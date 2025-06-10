@@ -328,7 +328,8 @@ const ul = document.createElement('ul');
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.justifyContent = "flex-start"
-ul.style.gap = "20px";          
+ul.style.gap = "20px"; 
+ul.style.paddingRight =  "10px"         
 
 div.appendChild(ul);
 
