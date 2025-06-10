@@ -320,5 +320,62 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort
   historique.addEventListener("click", function () {
     contains_historique.classList.toggle('active_historique');
   });
+const contain = document.querySelector('.contains-queries') 
+const div = document.createElement('div');
+div.className = "menu-queries"
 
+const ul = document.createElement('ul');
+ul.style.display = "flex";
+ul.style.flexDirection = "column";
+ul.style.justifyContent = "flex-start"
+ul.style.gap = "20px";          
+
+div.appendChild(ul);
+
+function menu(href, contains) {
+  const li = document.createElement('li');
+  li.className = "nav-item";
+
+  const a = document.createElement('a');
+  a.className = "nav-links";
+  a.innerHTML = contains;
+  a.href = href;
+
+  a.style.color = "rgb(239, 239, 239)";
+  a.style.fontSize = "0.9rem"
+  a.style.textDecoration = "none";
+
+  a.addEventListener("mouseover", () => {
+    a.style.color = "white";
+  });
+  a.addEventListener("mouseout", () => {
+    a.style.color= "rgb(239, 239, 239)";
+  });
+
+  li.appendChild(a);
+  ul.appendChild(li);
+}
+
+menu('#', 'Search');
+menu('#', 'About');
+menu('#', 'Investigate');
+
+  contain.appendChild(div)
+  const button_menu = document.getElementById("button-menu")
+  button_menu.addEventListener('click', function(){
+    if(document.querySelector('.menu-queries')){
+      document.querySelector('.menu-queries').classList.toggle('active_menu')
+    }
+  })
+  window.addEventListener("click" , function(event){
+  const menu = document.querySelector('.menu-queries');
+  const button = document.getElementById('button-menu');
+
+  if (menu) {
+    if (!menu.contains(event.target) && !button.contains(event.target)) {
+    
+      menu.classList.remove('active_menu'); 
+    }
+  }
+  })
 }

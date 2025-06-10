@@ -62,6 +62,17 @@ body {
 .expansive{
   width: 63vw;
 }
+
+.menu-queries{
+display : none;
+position :absolute;
+top :-300px;
+left : 0;
+width: 100%;
+background-color:rgb(33, 37, 41);
+z-index: 100000;
+padding : 10px;
+}
 @media  only screen and (max-width:1199px) {
   .custom-push{
     margin-left: 70px;
@@ -94,6 +105,14 @@ body {
     }
 }
 @media  only screen and (max-width:768px) {
+   .menu-queries {
+    transition: top 0.3s ease;
+    display: block;
+  }
+
+  .menu-queries.active_menu {
+    top: 9%;
+  }
   .expansive{
    width:100vw;
   }

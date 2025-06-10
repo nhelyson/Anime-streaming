@@ -210,8 +210,8 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
      if(anime.length > 0){
      Anime_search.attributes.abbreviatedTitles.forEach(name => {
   
-                                      const li = document.createElement('li')
-                                      li.className = "p-1"
+                                                       li.className = "p-1"
+                     const li = document.createElement('li')
                                       li.setAttribute('style', "font-size:0.8rem;text-align:justify;")
                                       li.style.width = "100%"
                                       li.innerHTML =`<br> ${name}`
@@ -388,7 +388,7 @@ fetch("https://graphql.anilist.co", {
     console.log("Anime :", data.data.Media);
     const video_trailer = document.querySelector('.trailer');
     const svg = document.getElementById("svg_Anime");
-    let rank = data.data.Media.rankings
+    let rank = data.data.Media.rankings 
     if(rank.length > 0){
        svg.innerHTML = `Ranked: ${data.data.Media.rankings[0].rank}`
     }else{
