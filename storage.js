@@ -322,14 +322,13 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort
   });
 const contain = document.querySelector('.contains-queries') 
 const div = document.createElement('div');
-div.className = "menu-queries mt-5"
+div.className = "menu-queries"
 
 const ul = document.createElement('ul');
-ul.className = 'p-2 w-50 me-auto ms-0'
+ul.className = 'p-2 w-50 me-auto ms-0 mt-auto'
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.gap = "20px"; 
-ul.style.marginRight = "50rem"
 div.appendChild(ul);
 
 function menu(href, contains) {
