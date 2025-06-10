@@ -329,7 +329,6 @@ ul.className = 'p-2 w-50'
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.gap = "20px"; 
-ul.style.marginRight =  "50rem"
 
 function menu(href, contains) {
   const li = document.createElement('li');
