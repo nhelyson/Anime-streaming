@@ -18,7 +18,7 @@
       if (receive.length > 0) {
        div.innerHTML = '';
         div.style.display = "block"
-        div.className = "border rounded-3 p-4 bg-white mx-auto mt-5 me-auto custom-padding";
+        div.className = "border rounded-3 p-lg-4 p-md-4 p-sm-0 p-0  bg-white mx-auto mt-5 me-auto";
         div.style.zIndex = "1000"
         div.style.position = "absolute";
         div.style.top = "2rem";
