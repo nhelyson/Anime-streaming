@@ -38,7 +38,7 @@
           div_contain.className = "card-body d-flex flex-column gap-2 w-50 border-0"
           div_contain.style.width = "50%";
           const description = document.createElement('p')
-          description.className = "mb-0 ms-2 mx-0"
+          description.className = "mb-0 ms-2 mx-0   d-lg-block d-md-block d-sm-none d-none"
           description.setAttribute(
                                       "style" ,"font-size:0.8rem" + ';' +
                                       "font-weight:700" + ';' + ';' + "font-family:'arial'"
