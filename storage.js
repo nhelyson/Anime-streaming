@@ -13,26 +13,6 @@ if (document.getElementById("body_search")) {
       let meta = data.meta.count;
       let count = Math.ceil(meta / perPage);
 
-      let reload = document.getElementById("back");
-      if (!reload) {
-        reload = document.createElement("button");
-        reload.id = "back";
-        reload.className = "btn btn-transparent me-3";
-        reload.innerHTML = `
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11 19L4 12L11 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M18 19L11 12L18 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`;
-        reload.style.fontSize = "0.9rem";
-        contains_bouton.appendChild(reload);
-        reload.addEventListener("click", () => {
-          if (passenger > 1) {
-            passenger -= 1;
-            view(urlBase, line, contains_bouton);
-          }
-        });
-      }
-
       animes.forEach(anime => {
         const div = document.createElement("div");
         div.className = "col";
@@ -105,27 +85,6 @@ if (document.getElementById("body_search")) {
           dots.className = "mx-1";
           contains_bouton.appendChild(dots);
         }
-      }
-
-      let load = document.getElementById("loadMoreButton");
-      if (!load) {
-        load = document.createElement("button");
-        load.id = "loadMoreButton";
-        load.className = "btn btn-transparent text-dark border-0";
-        load.style.fontSize = "0.9rem";
-        load.innerHTML = `
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 5L20 12L13 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M6 5L13 12L6 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`;
-        contains_bouton.appendChild(load);
-        load.addEventListener("click", () => {
-          passenger += 1;
-          if (passenger >= count) {
-            load.setAttribute("disabled", "true");
-          }
-          view(urlBase, line, contains_bouton);
-        });
       }
     })
     .catch(error => {
