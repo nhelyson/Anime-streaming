@@ -19,15 +19,14 @@
        div.innerHTML = '';
         div.style.display = "block"
         div.className = "border rounded-3 p-4 bg-white mx-auto mt-5 me-auto";
+        div.style.zIndex = "100000"
         div.style.position = "absolute";
         div.style.top = "2rem";
         div.style.left = "0.2rem"; 
-        div.style.width = "30rem"; 
-        div.style.maxHeight = "70vh"; 
-        div.style.overflowY = "auto"; 
-        div.style.zIndex = "1000000";
-        div.style.overflowY = "auto"; 
-
+        div.style.width = "90%";          
+        div.style.maxWidth = "500px";     
+        div.style.maxHeight = "70vh";
+        div.style.overflowY = "auto";
         receive.forEach(Anime => {
           const card = document.createElement('div');
           card.className = "card d-flex flex-row mb-5 p-3";
