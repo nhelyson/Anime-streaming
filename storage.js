@@ -325,11 +325,12 @@ const div = document.createElement('div');
 div.className = "menu-queries"
 
 const ul = document.createElement('ul');
+ul.className = 'p-5'
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.justifyContent = "flex-start"
 ul.style.gap = "20px"; 
-ul.style.paddingRight =  "10px"         
+      
 
 div.appendChild(ul);
 
