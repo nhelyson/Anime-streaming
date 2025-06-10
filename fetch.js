@@ -18,8 +18,8 @@
       if (receive.length > 0) {
        div.innerHTML = '';
         div.style.display = "block"
-        div.className = "border rounded-3 p-4 bg-white mx-auto mt-5 me-auto";
-        div.style.zIndex = "100000"
+        div.className = "border rounded-3 p-4 bg-white mx-auto mt-5 me-auto custom-padding";
+        div.style.zIndex = "1000"
         div.style.position = "absolute";
         div.style.top = "2rem";
         div.style.left = "0.2rem"; 
@@ -71,12 +71,9 @@
           const div_img = document.createElement('div');
           div_img.className = "card-body"
           const img = document.createElement('img');
-          img.style.objectFit = "cover"
-          img.style.width = "100%"
-          img.style.height = "100%"
           img.src = Anime.attributes.posterImage.medium;
           img.alt = Anime.attributes.canonicalTitle;
-          img.className = "img-fluid img rounded"
+          img.className = "img-fluid rounded"
           div_contain.appendChild(title)
           div_contain.appendChild(description)
           card.appendChild(img);
