@@ -6,6 +6,10 @@
     text-decoration: none;
 }
 
+body {
+  font-family: 'Asap', sans-serif;
+}
+
  .input{
  position: relative;
  top: 5rem;
@@ -44,6 +48,7 @@
 .custom-color {
   color: rgb(220, 215, 215)!important;
   font-weight: 600!important;
+  font-size: 0.8rem;
 }
 
 .custom-hover:hover{
@@ -54,6 +59,9 @@
   display: block!important;
 }
 
+.expansive{
+  width: 63vw;
+}
 @media  only screen and (max-width:1199px) {
   .custom-push{
     margin-left: 70px;
@@ -63,29 +71,32 @@
   }
 }
 @media  only screen and (max-width:1000px) {
+   .custom-push{
+    margin-left: 0;
+  }
   .custom-marge{
    margin-top: -8rem!important;
   }
-.reserves{
+ .reserves{
     margin-top: 0!important;
   }
-.releve{
+ .releve{
         position: relative;
         top: -10rem!important;
     } 
     .custom-over{
       width: 100%!important;
     }   
-}
-
-@media  only screen and (max-width:840px) {
-    .custom-over{
+  .custom-over{
       width: 100%!important;
       overflow:scroll;
       overflow-y:hidden;
-    }   
+    }
 }
 @media  only screen and (max-width:768px) {
+  .expansive{
+   width:100vw;
+  }
    .custom-push{
     margin-left: 0;
   }

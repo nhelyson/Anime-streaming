@@ -12,14 +12,21 @@ function view(urlBase, line , contains_bouton) {
     .then(res => res.json())
     .then(data => {
       const animes = data.data;
+      console.log(animes)
       let meta = data.meta.count
       let count = Math.ceil(meta/perPage)
+      console.log(count)
       let reload = document.getElementById("back")
        if (!reload) {
         reload = document.createElement("button");
         reload.id = "back";
-        reload.className = "btn btn-transparent border bg-light me-3";
-        reload.textContent = "precedent";
+        reload.className = "btn btn-transparent  me-3";
+        reload.innerHTML= 
+        `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <path d="M11 19L4 12L11 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+         <path d="M18 19L11 12L18 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+         </svg>
+        `;
         reload.style.fontSize = "0.9rem"
         contains_bouton.appendChild(reload);
         reload.addEventListener("click", () => {
@@ -49,7 +56,7 @@ function view(urlBase, line , contains_bouton) {
 
         const div_title = document.createElement("p");
         div_title.className = "mt-3 fw-bold";
-        div_title.style.fontSize = "0.9rem";
+        div_title.style.fontSize = "0.8rem";
         div_title.textContent = anime.attributes.canonicalTitle;
 
         card.appendChild(img);
@@ -59,7 +66,7 @@ function view(urlBase, line , contains_bouton) {
 
         div.addEventListener("click", () => {
             const history = {
-           Anime_title: anime.attributes.titles.en || Anime.attributes.canonicalTitle,
+           Anime_title: anime.attributes.titles.en || anime.attributes.canonicalTitle,
            Anime_image: img.src,
            Anime_id:anime.id
            };
@@ -72,11 +79,17 @@ function view(urlBase, line , contains_bouton) {
           window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
         });
       });
+
+      if(count >=100){
+        count = Math.ceil(count/75)
+        console.log(count)
+       }
        const count_page = document.createElement("button")
        for(i=1; i<=count; i++){
         const pagination = document.createElement("button")
         pagination.className = "btn text-dark"
         pagination.innerHTML = `${i}`
+        pagination.style.backgroundColor = "#e3f0fcff"
         pagination.dataset.number= `${i}`
         contains_bouton.appendChild(pagination)
         pagination.addEventListener("click", function(){
@@ -87,8 +100,8 @@ function view(urlBase, line , contains_bouton) {
         })
         
         if(passenger === parseInt(pagination.textContent)){
-          pagination.style.border = "2px solid red"
-          pagination.className = "btn text-dark"
+          pagination.className = "btn text-white border-0"
+          pagination.style.backgroundColor = "#2980b9ff"
         }
       }
 
@@ -97,9 +110,13 @@ function view(urlBase, line , contains_bouton) {
       if (!load) {
         load = document.createElement("button");
         load.id = "loadMoreButton";
-        load.className = "btn btn-transparent border text-dark bg-white";
+        load.className = "btn btn-transparent text-dark";
         load.style.fontSize = "0.9rem"
-        load.textContent = "suivant";
+        load.innerHTML = `
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <path d="M13 5L20 12L13 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+         <path d="M6 5L13 12L6 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+       </svg>`
         contains_bouton.appendChild(load);
         load.addEventListener("click", () => {
            passenger += 1;
@@ -109,7 +126,7 @@ function view(urlBase, line , contains_bouton) {
               view(urlBase, line, contains_bouton);
         });
       }
-      count_page.className = "btn text-dark mt-3"
+      count_page.className = "btn text-dark mt-3 ms-auto"
       count_page.innerHTML = `<p class="">Page:${passenger}/${count}</p>`
       contains_bouton.appendChild(count_page)
     })
@@ -118,14 +135,14 @@ function view(urlBase, line , contains_bouton) {
     });
 }
 
-fetch("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&page[limit]=4&sort=popularityRank")
+fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort=popularityRank")
   .then(res => res.json())
   .then(data => {
     const animes = data.data;
+    console.log(animes)
     const btn =  document.getElementById("btn-place")
     const row = document.getElementById("Anime");
     row.innerHTML = "";
-
     const button_view = document.createElement('button');
     button_view.className = "btn btn-transparent text-end border-0 ms-auto me-2";
     button_view.style.fontSize = "1rem"
@@ -174,6 +191,68 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV
        document.getElementById("pagination"));
   passenger = 1;
 });
+
+  })
+  .catch(err => {
+    console.error("Erreur :", err);
+  });
+
+  fetch("https://kitsu.io/api/edge/anime?page[limit]=4&sort=popularityRank")
+  .then(res => res.json())
+  .then(data => {
+    const animes = data.data;
+    console.log(animes)
+    const btn =  document.getElementById("btn_trend")
+    const row = document.getElementById("trending");
+    row.innerHTML = "";
+    const button_view = document.createElement('button');
+    button_view.className = "btn btn-transparent text-end border-0 ms-auto me-2";
+    button_view.style.fontSize = "1rem"
+    button_view.style.width = "6rem";
+    button_view.textContent = "voir plus";
+
+    animes.forEach(anime => {
+      const div = document.createElement('div');
+      div.className = "col";
+
+      const card = document.createElement('div');
+      card.className = "card border-0";
+      card.style.cursor = "pointer";
+
+      const img = document.createElement('img');
+      img.className = "img-fluid img";
+      img.style.objectFit = "cover";
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.src = anime.attributes.posterImage?.large || "";
+      img.alt = anime.attributes.canonicalTitle;
+
+      const div_title = document.createElement('p');
+      div_title.className = "mt-3 fw-bold";
+      div.setAttribute("style", "font-size:0.9rem");
+      div_title.innerHTML = anime.attributes.canonicalTitle;
+
+      card.appendChild(img);
+      card.appendChild(div_title);
+      div.appendChild(card);
+      row.appendChild(div);
+
+      div.addEventListener("click", () => {
+        window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
+      });
+    });
+
+    btn.appendChild(button_view);
+
+  button_view.addEventListener("click", function () {
+  row.innerHTML = "";
+  btn.remove()
+  passenger = 0; // on réinitialise pour partir de la première page
+  view(`https://kitsu.io/api/edge/anime?sort=popularityRank`, 
+       document.getElementById("trending"),
+       document.getElementById("pagination_trend"));
+      passenger = 1;
+    });
 
   })
   .catch(err => {

@@ -44,10 +44,28 @@
                                       "style" ,"font-size:0.8rem" + ';' +
                                       "font-weight:700" + ';' + ';' + "font-family:'arial'"
                                     )
-          description.innerHTML = Anime.attributes.synopsis
+          descript= Anime.attributes.synopsis
                                  ? Anime.attributes.synopsis.substring(0, 115) + '...'
                                 : 'Synopsis indisponible';
+           
+         fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(descript)}`)
+         .then(res => res.json())
+         .then(data => {
 
+           const segments = data[0];
+
+           const traductionComplete = segments.map(segment => segment[0]).join(' ');
+           description.style.fontFamily = "Arial, sans-serif";
+           description.style.fontSize = "0.9rem";
+           description.style.lineHeight = "1.5";
+                  description.innerHTML = traductionComplete;
+          })
+       
+          .catch(error => {
+          console.error("Erreur :", error);
+          document.getElementById("resultat").inne = "Une erreur s'est produite.";
+            });
+                    
           const title = document.createElement("div");
           title.innerHTML = `<h5 class="ms-2">${Anime.attributes.titles.en || Anime.attributes.canonicalTitle}</h5>`;
 
@@ -62,6 +80,50 @@
           card.appendChild(img);
           card.appendChild(div_contain);
           div.appendChild(card);
+          card.addEventListener('mouseenter', function(){
+          descript= null
+          const mouse = document.querySelector('.mouse')
+          if(!mouse){
+          const div_mouse = document.createElement('div');
+          div_mouse.className = "card position-absolute mouse bg-light";
+          div_mouse.style.zIndex = "1000000";
+          div_mouse.style.top = `${card.getBoundingClientRect().top + window.scrollY}px`;
+          div_mouse.style.left = `${card.getBoundingClientRect().right + 10}px`; 
+          div_mouse.style.width = "550px";
+          const body = document.createElement('div');
+          body.className = "card-body";
+          const title = document.createElement('h3')
+          title.innerHTML = `${Anime.attributes.titles?.en || Anime.attributes.canonicalTitle} ${Anime.attributes.createdAt.substring(0,4)}`
+          const des_mouse = document.createElement('p')
+          des_mouse.style.fontSize = "0.8rem"
+            descript=Anime.attributes.synopsis
+                                 ? Anime.attributes.synopsis
+                                : 'Synopsis indisponible'; 
+          fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(descript)}`)
+         .then(res => res.json())
+         .then(data => {
+
+           const segments = data[0];
+
+           const traductionComplete = segments.map(segment => segment[0]).join(' ');
+            des_mouse.style.fontFamily = "Arial, sans-serif";
+            des_mouse.style.fontSize = "0.9rem";
+            des_mouse.style.lineHeight = "1.5";
+            des_mouse.innerHTML = traductionComplete;
+          })
+          body.appendChild(title)
+          body.appendChild(des_mouse)
+          div_mouse.appendChild(body);
+          document.body.appendChild(div_mouse);
+           }
+           })
+
+           card.addEventListener('mouseleave', function(){
+            const mouse = document.querySelector('.mouse')
+            if(mouse){
+              mouse.remove()
+            }
+           })
           card.addEventListener("click", function () {
            const history = {
            Anime_title: Anime.attributes.titles.en || Anime.attributes.canonicalTitle,
@@ -69,7 +131,6 @@
            Anime_id:Anime.id
            };
           
-    
           let historique_recept = JSON.parse(localStorage.getItem('historique')) || [];
           historique_recept.unshift(history);
           localStorage.setItem('historique', JSON.stringify(historique_recept));
@@ -83,17 +144,6 @@
       
         if(search_fetch.length <= 1){
         div.style.display = 'none'
-        }
-
-        if( receive.length === 0){
-        div.innerHTML = ''
-        const p = document.createElement('p')
-        p.textContent =  "Aucune Anime trouve"
-        div.className = "border mx-auto p-5";
-        div.style.position = "relative";
-        div.style.top = "7rem";
-        div.style.width = "50rem";
-        div.appendChild(p)
         }
       
     })
@@ -149,7 +199,7 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
    title.style.fontSize = "1.3rem";
    title.addEventListener("mouseenter", function() {
     const alternative_name = document.createElement("div")
-    alternative_name.className = "alternative_name  position-absolute bg-light p-5 rounded-2";
+    alternative_name.className = "alternative_name  position-absolute bg-light p-5 rounded-2 mt-5";
     alternative_name.setAttribute('style', "left:8rem; top:-2rem;z-index:1000000;")
     alternative_name.style.transition = "all 2s ease-in"
     const ul = document.createElement('ul')
