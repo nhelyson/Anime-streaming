@@ -329,8 +329,6 @@ ul.className = 'p-2 w-50 me-auto ms-0 mt-auto'
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.gap = "20px"; 
-div.appendChild(ul);
-
 function menu(href, contains) {
   const li = document.createElement('li');
   li.className = "nav-item";
@@ -358,8 +356,8 @@ function menu(href, contains) {
 menu('#', 'Search');
 menu('#', 'About');
 menu('#', 'Investigate');
-
-  contain.appendChild(div)
+div.appendChild(ul);
+contain.appendChild(div)
   const button_menu = document.getElementById("button-menu")
   button_menu.addEventListener('click', function(){
     if(document.querySelector('.menu-queries')){
