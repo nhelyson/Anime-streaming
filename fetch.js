@@ -71,9 +71,12 @@
           const div_img = document.createElement('div');
           div_img.className = "card-body"
           const img = document.createElement('img');
+          img.style.objectFit = "cover"
+          img.style.width = "100%"
+          img.style.height = "100%"
           img.src = Anime.attributes.posterImage.medium;
           img.alt = Anime.attributes.canonicalTitle;
-          img.className = "img-fluid rounded"
+          img.className = "img-fluid img rounded"
           div_contain.appendChild(title)
           div_contain.appendChild(description)
           card.appendChild(img);
