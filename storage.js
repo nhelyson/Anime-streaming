@@ -1,48 +1,43 @@
 if (document.getElementById("body_search")) {
  let perPage = 20;
  let passenger = 0;
-
-function view(urlBase, line , contains_bouton) {
-  contains_bouton.innerHTML = ""
+  function view(urlBase, line, contains_bouton) {
+  contains_bouton.innerHTML = "";
   const offset = passenger * perPage;
-  console.log(offset)
   const url = `${urlBase}&page[limit]=${perPage}&page[offset]=${offset}`;
-  console.log(offset)
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
       const animes = data.data;
-      console.log(animes)
-      let meta = data.meta.count
-      let count = Math.ceil(meta/perPage)
-      console.log(count)
-      let reload = document.getElementById("back")
-       if (!reload) {
+      let meta = data.meta.count;
+      let count = Math.ceil(meta / perPage);
+
+      let reload = document.getElementById("back");
+      if (!reload) {
         reload = document.createElement("button");
         reload.id = "back";
-        reload.className = "btn btn-transparent  me-3";
-        reload.innerHTML= 
-        `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <path d="M11 19L4 12L11 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-         <path d="M18 19L11 12L18 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-         </svg>
-        `;
-        reload.style.fontSize = "0.9rem"
+        reload.className = "btn btn-transparent me-3";
+        reload.innerHTML = `
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 19L4 12L11 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 19L11 12L18 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+        reload.style.fontSize = "0.9rem";
         contains_bouton.appendChild(reload);
         reload.addEventListener("click", () => {
-        if (passenger >1) {
-          passenger -= 1;
-          view(urlBase, line, contains_bouton);
-        }
-
-      });
-      
+          if (passenger > 1) {
+            passenger -= 1;
+            view(urlBase, line, contains_bouton);
+          }
+        });
       }
-      // Ajouter les nouveaux animes sans effacer les précédents
+
       animes.forEach(anime => {
         const div = document.createElement("div");
         div.className = "col";
-        div.style.cursor = "pointer"
+        div.style.cursor = "pointer";
+
         const card = document.createElement("div");
         card.className = "card border-0";
 
@@ -65,13 +60,12 @@ function view(urlBase, line , contains_bouton) {
         line.appendChild(div);
 
         div.addEventListener("click", () => {
-            const history = {
-           Anime_title: anime.attributes.titles.en || anime.attributes.canonicalTitle,
-           Anime_image: img.src,
-           Anime_id:anime.id
-           };
-          
-    
+          const history = {
+            Anime_title: anime.attributes.titles.en || anime.attributes.canonicalTitle,
+            Anime_image: img.src,
+            Anime_id: anime.id
+          };
+
           let historique_recept = JSON.parse(localStorage.getItem('historique')) || [];
           historique_recept.unshift(history);
           localStorage.setItem('historique', JSON.stringify(historique_recept));
@@ -80,61 +74,87 @@ function view(urlBase, line , contains_bouton) {
         });
       });
 
-      if(count >=100){
-        count = Math.ceil(count/75)
-        console.log(count)
-       }
-       const count_page = document.createElement("button")
-       for(i=1; i<=count; i++){
-        const pagination = document.createElement("button")
-        pagination.className = "btn text-dark"
-        pagination.innerHTML = `${i}`
-        pagination.style.backgroundColor = "#e3f0fcff"
-        pagination.dataset.number= `${i}`
-        contains_bouton.appendChild(pagination)
-        pagination.addEventListener("click", function(){
-        line.innerHTML = ""
-        passenger=0
-        passenger += parseInt(this.textContent)
-         view(urlBase, line, contains_bouton);
-        })
-        
-        if(passenger === parseInt(pagination.textContent)){
-          pagination.className = "btn text-white border-0"
-          pagination.style.backgroundColor = "#2980b9ff"
+      const maxVisiblePages = 3;
+      const startPage = Math.max(1, passenger - 1);
+      const endPage = Math.min(count, passenger + 1);
+
+      const firstBtn = document.createElement("button");
+      firstBtn.textContent = "<<";
+      firstBtn.className = "btn btn-outline-dark me-1";
+      firstBtn.addEventListener("click", () => {
+        passenger = 1;
+        view(urlBase, line, contains_bouton);
+      });
+      contains_bouton.appendChild(firstBtn);
+
+      for (let i = 1; i <= count; i++) {
+        if (i === 1 || i === count || (i >= startPage && i <= endPage)) {
+          const pagination = document.createElement("button");
+          pagination.className = "btn text-dark mx-1";
+          pagination.innerHTML = `${i}`;
+          pagination.dataset.number = `${i}`;
+
+          if (passenger === i) {
+            pagination.className = "btn text-white border-0";
+            pagination.style.backgroundColor = "#2980b9ff";
+          } else {
+            pagination.style.backgroundColor = "#e3f0fcff";
+          }
+
+          pagination.addEventListener("click", function () {
+            line.innerHTML = "";
+            passenger = parseInt(this.textContent);
+            view(urlBase, line, contains_bouton);
+          });
+
+          contains_bouton.appendChild(pagination);
+        } else if ((i === startPage - 1 && i > 1) || (i === endPage + 1 && i < count)) {
+          const dots = document.createElement("span");
+          dots.textContent = "...";
+          dots.className = "mx-1";
+          contains_bouton.appendChild(dots);
         }
       }
 
-       // Crée le bouton "Charger plus" une seule fois
+      const lastBtn = document.createElement("button");
+      lastBtn.textContent = ">>";
+      lastBtn.className = "btn btn-outline-dark ms-1";
+      lastBtn.addEventListener("click", () => {
+        passenger = count;
+        view(urlBase, line, contains_bouton);
+      });
+      contains_bouton.appendChild(lastBtn);
+
       let load = document.getElementById("loadMoreButton");
       if (!load) {
         load = document.createElement("button");
         load.id = "loadMoreButton";
-        load.className = "btn btn-transparent text-dark";
-        load.style.fontSize = "0.9rem"
+        load.className = "btn btn-transparent text-dark border-0";
+        load.style.fontSize = "0.9rem";
         load.innerHTML = `
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <path d="M13 5L20 12L13 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-         <path d="M6 5L13 12L6 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-       </svg>`
+          <path d="M13 5L20 12L13 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 5L13 12L6 19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
         contains_bouton.appendChild(load);
         load.addEventListener("click", () => {
-           passenger += 1;
-          if(passenger >=count){
-           load.setAttribute("disabled", "true");
+          passenger += 1;
+          if (passenger >= count) {
+            load.setAttribute("disabled", "true");
           }
-              view(urlBase, line, contains_bouton);
+          view(urlBase, line, contains_bouton);
         });
       }
-      count_page.className = "btn text-dark mt-3 ms-auto"
-      count_page.innerHTML = `<p class="">Page:${passenger}/${count}</p>`
-      contains_bouton.appendChild(count_page)
+
+      const count_page = document.createElement("button");
+      count_page.className = "btn text-dark mt-3 ms-auto";
+      count_page.innerHTML = `<p class="">Page:${passenger}/${count}</p>`;
+      contains_bouton.appendChild(count_page);
     })
     .catch(error => {
       console.error("Erreur lors du chargement :", error);
     });
 }
-
 fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort=popularityRank")
   .then(res => res.json())
   .then(data => {
