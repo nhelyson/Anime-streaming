@@ -325,7 +325,7 @@ const div = document.createElement('div');
 div.className = "menu-queries"
 
 const ul = document.createElement('ul');
-ul.className = 'p-5'
+ul.className = 'p-3'
 ul.style.display = "flex";
 ul.style.flexDirection = "column";
 ul.style.justifyContent = "flex-start"
