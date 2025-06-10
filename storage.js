@@ -53,12 +53,15 @@ if (document.getElementById("body_search")) {
           window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
         });
       });
-
       const maxVisiblePages = 3;
       const startPage = Math.max(1, passenger - 1);
       const endPage = Math.min(count, passenger + 1);
 
       for (let i = 1; i <= count; i++) {
+         if (count > 50) {
+            count = Math.ceil(count / 60);
+          }
+
         if (i === 1 || i === count || (i >= startPage && i <= endPage)) {
           const pagination = document.createElement("button");
           pagination.className = "btn text-dark mx-1";
