@@ -314,7 +314,7 @@ function menu(href, contains) {
   ul.appendChild(li);
 }
 
-menu('#', `<i class="fa-solid fa-magnifying-glass fa-lg"></i>`);
+menu('index.html', `<i class="fa-solid fa-magnifying-glass fa-lg"></i>`);
 menu('#', `<i class="fa-solid fa-message fa-lg"></i>`);
 menu('#', `<i class="fa-solid fa-user-secret fa-lg"></i>`);
 div.appendChild(ul);

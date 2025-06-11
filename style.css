@@ -110,7 +110,7 @@ padding : 10px;
 }
 @media  only screen and (max-width:768px) {
    .custom-display{
-    display: none!important;
+    display: none;
    }
    .menu-queries {
     transition: top 0.3s ease;

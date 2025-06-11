@@ -34,9 +34,10 @@
           card.style.height = "200px";
           card.style.cursor = "pointer";
           card.setAttribute("title", `${Anime.attributes.titles.en || Anime.attributes.canonicalTitle}`)
+          const div_title =  document.createElement('div')
+          div_title.className = "card-title"
           const div_contain = document.createElement('div')
-          div_contain.className = "card-body d-flex flex-column gap-2 w-50 border-0"
-          div_contain.style.width = "50%";
+          div_contain.className = "card-body d-flex flex-column gap-2 w-50 border-0 mb-auto"
           const description = document.createElement('p')
           description.className = "mb-0 ms-2 mx-0   d-lg-block d-md-block d-sm-none d-none"
           description.setAttribute(
@@ -73,18 +74,19 @@
           const img = document.createElement('img');
           img.src = Anime.attributes.posterImage.medium;
           img.alt = Anime.attributes.canonicalTitle;
-          img.className = "img-fluid rounded"
-          div_contain.appendChild(title)
-          div_contain.appendChild(description)
-          card.appendChild(img);
+          img.className = "img-fluid rounded custom-scale"
+          div_contain.appendChild(img)
+          div_title.appendChild(title)
+          div_title.appendChild(description)
           card.appendChild(div_contain);
+          card.appendChild(div_title)
           div.appendChild(card);
           card.addEventListener('mouseenter', function(){
           descript= null
           const mouse = document.querySelector('.mouse')
           if(!mouse){
           const div_mouse = document.createElement('div');
-          div_mouse.className = "card position-absolute mouse bg-light";
+          div_mouse.className = "card position-absolute mouse bg-light d-lg-block d-md-block d-sm-none d-none";
           div_mouse.style.zIndex = "1000000";
           div_mouse.style.top = `${card.getBoundingClientRect().top + window.scrollY}px`;
           div_mouse.style.left = `${card.getBoundingClientRect().right + 10}px`; 
