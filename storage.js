@@ -1,6 +1,7 @@
 if (document.getElementById("body_search")) {
  let perPage = 20;
  let passenger = 0;
+ let letter = "anime"
   function view(urlBase, line, contains_bouton) {
   contains_bouton.innerHTML = "";
   const offset = passenger * perPage;
@@ -94,7 +95,7 @@ if (document.getElementById("body_search")) {
       console.error("Erreur lors du chargement :", error);
     });
 }
-fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort=popularityRank")
+fetch(`https://kitsu.io/api/edge/${letter}?filter[status]=current&page[limit]=4&sort=popularityRank`)
   .then(res => res.json())
   .then(data => {
     const animes = data.data;
@@ -145,7 +146,7 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort
   row.innerHTML = "";
   btn.remove()
   passenger = 0; // on réinitialise pour partir de la première page
-  view(`https://kitsu.io/api/edge/anime?filter[status]=current&filter[subtype]=TV&sort=popularityRank`, 
+  view(`https://kitsu.io/api/edge/${letter}?filter[status]=current&filter[subtype]=TV&sort=popularityRank`, 
        document.getElementById("Anime"),
        document.getElementById("pagination"));
   passenger = 1;
@@ -156,7 +157,7 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort
     console.error("Erreur :", err);
   });
 
-  fetch("https://kitsu.io/api/edge/anime?page[limit]=4&sort=popularityRank")
+  fetch(`https://kitsu.io/api/edge/${letter}?page[limit]=4&sort=popularityRank`)
   .then(res => res.json())
   .then(data => {
     const animes = data.data;
@@ -207,7 +208,7 @@ fetch("https://kitsu.io/api/edge/anime?filter[status]=current&page[limit]=4&sort
   row.innerHTML = "";
   btn.remove()
   passenger = 0; // on réinitialise pour partir de la première page
-  view(`https://kitsu.io/api/edge/anime?sort=popularityRank`, 
+  view(`https://kitsu.io/api/edge/${letter}?sort=popularityRank`, 
        document.getElementById("trending"),
        document.getElementById("pagination_trend"));
       passenger = 1;
@@ -312,9 +313,9 @@ function menu(href, contains) {
   ul.appendChild(li);
 }
 
-menu('#', 'Search');
-menu('#', 'About');
-menu('#', 'Investigate');
+menu('#', `<i class="fa-solid fa-magnifying-glass fa-lg"></i>`);
+menu('#', `<i class="fa-solid fa-message fa-lg"></i>`);
+menu('#', `<i class="fa-solid fa-user-secret fa-lg"></i>`);
 div.appendChild(ul);
 contain.appendChild(div)
   const button_menu = document.getElementById("button-menu")

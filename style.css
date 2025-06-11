@@ -73,6 +73,10 @@ background-color:rgb(33, 37, 41);
 z-index: 100000;
 padding : 10px;
 }
+.roule.active_roule{
+  display: block!important;
+  transition:  all 0.7s ease-out!important;
+}
 @media  only screen and (max-width:1199px) {
   .custom-push{
     margin-left: 70px;
