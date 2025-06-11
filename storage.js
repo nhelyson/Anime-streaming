@@ -60,7 +60,8 @@ if (document.getElementById("body_search")) {
 
       for (let i = 1; i <= count; i++) {
          if (count > 50) {
-            count = Math.ceil(count / 20);
+            count = Math.ceil(count /25);
+            console.log(count)
           }
 
         if (i === 1 || i === count || (i >= startPage && i <= endPage)) {
