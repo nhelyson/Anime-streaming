@@ -52,12 +52,26 @@
          title.style.fontWeight = "600";
          title.style.fontSize = "0.95rem";
 
-         const badge = document.createElement('span');
-         badge.textContent = Anime.attributes.subtype || "Inconnu";
-         badge.className = "badge bg-secondary";
-         badge.style.fontSize = "0.7rem";
-         badge.style.padding = "5px 10px";
+         const badge = document.createElement('div')
+         let badge_recept = Anime.attributes.subtype || "Inconnu"
 
+          fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(badge_recept)}`)
+         .then(res => res.json())
+         .then(data => {
+
+          const segments = data[0];
+
+          const traductionComplete = segments.map(segment => segment[0]).join(' ');
+          badge.className = "badge bg-secondary";
+          badge.style.fontSize = "0.7rem";
+          badge.style.padding = "5px 10px";
+          badge.innerHTML = traductionComplete;
+
+         })
+        .catch(error => {
+         console.error("Erreur :", error);
+         document.getElementById("resultat").innerHTML = "Une erreur s'est produite.";
+           });
           content.appendChild(title);
           content.appendChild(badge);
        
