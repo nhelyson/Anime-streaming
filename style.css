@@ -109,8 +109,17 @@ padding : 10px;
     }
 }
 @media  only screen and (max-width:768px) {
+   .custom-title{
+    font-size: 0.8rem;
+   }
+   .custom-img{
+    position: relative;
+    left: -2rem;
+    top: -2rem;
+    scale:0.6;
+   }
    .custom-display{
-    display: none;
+    display: none!important;
    }
    .menu-queries {
     transition: top 0.3s ease;

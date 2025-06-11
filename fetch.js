@@ -28,59 +28,43 @@
         div.style.maxHeight = "70vh";
         div.style.overflowY = "auto";
         receive.forEach(Anime => {
-          const card = document.createElement('div');
-          card.className = "card d-flex flex-row mb-5 p-3";
-          card.style.overflow = "hidden";
-          card.style.height = "200px";
-          card.style.cursor = "pointer";
-          card.setAttribute("title", `${Anime.attributes.titles.en || Anime.attributes.canonicalTitle}`)
-          const div_title =  document.createElement('div')
-          div_title.className = "card-title"
-          const div_contain = document.createElement('div')
-          div_contain.className = "card-body d-flex flex-column gap-2 w-50 border-0 mb-auto"
-          const description = document.createElement('p')
-          description.className = "mb-0 ms-2 mx-0   d-lg-block d-md-block d-sm-none d-none"
-          description.setAttribute(
-                                      "style" ,"font-size:0.8rem" + ';' +
-                                      "font-weight:700" + ';' + ';' + "font-family:'arial'"
-                                    )
-          descript= Anime.attributes.synopsis
-                                 ? Anime.attributes.synopsis.substring(0, 115) + '...'
-                                : 'Synopsis indisponible';
-           
-         fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(descript)}`)
-         .then(res => res.json())
-         .then(data => {
+                        const card = document.createElement('div');
+        card.className = "d-flex flex-row align-items-center justify-content-between mb-3";
+        card.style.gap = "10px";
+        card.style.cursor = "pointer";
 
-           const segments = data[0];
+        const img = document.createElement('img');
+        img.src = Anime.attributes.posterImage?.tiny || Anime.attributes.posterImage?.small;
+        img.alt = Anime.attributes.canonicalTitle;
+        img.className = "rounded";
+        img.style.width = "55px";
+        img.style.height = "75px";
+        img.style.objectFit = "cover";
 
-           const traductionComplete = segments.map(segment => segment[0]).join(' ');
-           description.style.fontFamily = "Arial, sans-serif";
-           description.style.fontSize = "0.9rem";
-           description.style.lineHeight = "1.5";
-                  description.innerHTML = traductionComplete;
-          })
+
+         const content = document.createElement('div');
+         content.className = "d-flex flex-grow-1 justify-content-between align-items-center";
+
+         const title = document.createElement('p');
+         title.className = "mb-0";
+         title.textContent = Anime.attributes.titles.en || Anime.attributes.canonicalTitle;
+         title.style.color = "black"; 
+         title.style.fontWeight = "600";
+         title.style.fontSize = "0.95rem";
+
+         const badge = document.createElement('span');
+         badge.textContent = Anime.attributes.subtype || "Inconnu";
+         badge.className = "badge bg-secondary";
+         badge.style.fontSize = "0.7rem";
+         badge.style.padding = "5px 10px";
+
+          content.appendChild(title);
+          content.appendChild(badge);
        
-          .catch(error => {
-          console.error("Erreur :", error);
-          document.getElementById("resultat").inne = "Une erreur s'est produite.";
-            });
-                    
-          const title = document.createElement("div");
-          title.innerHTML = `<h5 class="ms-2">${Anime.attributes.titles.en || Anime.attributes.canonicalTitle}</h5>`;
-
-          const div_img = document.createElement('div');
-          div_img.className = "card-body"
-          const img = document.createElement('img');
-          img.src = Anime.attributes.posterImage.medium;
-          img.alt = Anime.attributes.canonicalTitle;
-          img.className = "img-fluid rounded custom-scale"
-          div_contain.appendChild(img)
-          div_title.appendChild(title)
-          div_title.appendChild(description)
-          card.appendChild(div_contain);
-          card.appendChild(div_title)
+          card.appendChild(img);
+          card.appendChild(content);
           div.appendChild(card);
+
           card.addEventListener('mouseenter', function(){
           descript= null
           const mouse = document.querySelector('.mouse')
