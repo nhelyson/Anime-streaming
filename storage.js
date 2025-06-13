@@ -314,7 +314,7 @@ function menu(href, contains) {
 }
 
 menu('index.html', `<i class="fa-solid fa-magnifying-glass fa-lg"></i>`);
-menu('#', `<i class="fa-solid fa-message fa-lg"></i>`);
+menu('news.html', `<i class="fa-solid fa-message fa-lg"></i>`);
 menu('#', `<i class="fa-solid fa-user-secret fa-lg"></i>`);
 div.appendChild(ul);
 contain.appendChild(div)
@@ -379,7 +379,7 @@ if(document.getElementById("news")){
   }
 
   menu('index.html', `<i class="fa-solid fa-magnifying-glass fa-lg"></i>`);
-  menu('#', `<i class="fa-solid fa-message fa-lg"></i>`);
+  menu('news.html', `<i class="fa-solid fa-message fa-lg"></i>`);
   menu('#', `<i class="fa-solid fa-user-secret fa-lg"></i>`);
   div_menu.appendChild(ul);
   contain_menu.appendChild(div_menu)
@@ -405,5 +405,5 @@ if(document.getElementById("news")){
     }
 
     })
-    
+
     }
