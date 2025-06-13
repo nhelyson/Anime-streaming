@@ -336,3 +336,74 @@ contain.appendChild(div)
   }
   })
 }
+
+if(document.getElementById("news")){
+ fetch('navbar.html')
+  .then(res => res.text())
+  .then(data =>{     
+    let contain =  data
+    if(contain){
+     const div = document.querySelector('.nabvar-contain')
+     div.innerHTML = contain
+     const contain_menu = document.querySelector('.contains-queries') 
+     const div_menu = document.createElement('div');
+     div_menu.className = "menu-queries"
+
+     const ul = document.createElement('ul');
+     ul.className = 'p-2 w-50 me-auto ms-0'
+     ul.style.display = "flex";
+     ul.style.flexDirection = "column";
+     ul.style.gap = "20px"; 
+     function menu(href, contains) {
+     const li = document.createElement('li');
+     li.className = "nav-item";
+
+     const a = document.createElement('a');
+     a.className = "nav-links";
+     a.innerHTML = contains;
+     a.href = href;
+
+     a.style.color = "rgb(239, 239, 239)";
+     a.style.fontSize = "0.9rem"
+     a.style.textDecoration = "none";  
+
+     a.addEventListener("mouseover", () => {
+    a.style.color = "white";
+     });
+     a.addEventListener("mouseout", () => {
+    a.style.color= "rgb(239, 239, 239)";
+  });
+
+  li.appendChild(a);
+  ul.appendChild(li);
+  }
+
+  menu('index.html', `<i class="fa-solid fa-magnifying-glass fa-lg"></i>`);
+  menu('#', `<i class="fa-solid fa-message fa-lg"></i>`);
+  menu('#', `<i class="fa-solid fa-user-secret fa-lg"></i>`);
+  div_menu.appendChild(ul);
+  contain_menu.appendChild(div_menu)
+    const button_menu = document.getElementById("button-menu")
+    button_menu.addEventListener('click', function(){
+      if(document.querySelector('.menu-queries')){
+        document.querySelector('.menu-queries').classList.toggle('active_menu')
+    }
+    })
+    window.addEventListener("click" , function(event){
+    const menu = document.querySelector('.menu-queries');
+    const button = document.getElementById('button-menu');
+
+    if (menu) {
+      if (!menu.contains(event.target) && !button.contains(event.target)) {
+    
+      menu.classList.remove('active_menu'); 
+    }
+    }
+
+    })
+
+    }
+
+    })
+    
+    }
