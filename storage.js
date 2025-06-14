@@ -376,7 +376,7 @@ if(document.querySelector('.nabvar-contain')){
         card.className = "card border-0 mt-5"
         const card_title = document.createElement("h4")
         card_title.className = "card-title px-2"
-        card_title.innerHTML = `<svg width="40" height="40" fill="#007bff" viewBox="0 0 24 24">
+        card_title.innerHTML = `<svg width="25" height="25" fill="#007bff" viewBox="0 0 24 24">
                                 <path d="M12 6V3L8 7l4 4V8c2.76 0 5 2.24 5 5 0 1.46-.63 2.77-1.64 3.69l1.42 1.42C18.05 16.56 19 14.42 19 12c0-3.87-3.13-7-7-7z"/>
                                 <path d="M6.36 6.36C5.35 7.23 4.63 8.53 4.2 10h2.02c.33-1.27 1.14-2.36 2.23-3.06L6.36 6.36zM4 12c0 2.42.95 4.56 2.49 6.11l1.42-1.42C6.63 16.77 6 15.46 6 14h2c0 2.76 2.24 5 5 5v3l4-4-4-4v3c-1.66 0-3-1.34-3-3 0-.74.27-1.41.73-1.93L8.1 9.5A6.94 6.94 0 004 12z"/>
                                 </svg>
