@@ -356,21 +356,9 @@ if(document.querySelector('.nabvar-contain')){
     }
 
     if(document.getElementById("news")){
-        const updates = [
+        const updates = [  
       {
-        date: '2025-06-12',
-        title: 'Nouvelle fonctionnalité de recherche',
-        description: 'Nous avons ajouté une barre de recherche dynamique pour trouver rapidement des articles et vidéos.',
-        link: '#'
-      },
-      {
-        date: '2025-05-30',
-        title: 'Refonte du design',
-        description: 'Le site bénéficie désormais d’un nouveau design plus moderne, responsive et accessible.',
-        link: '#'
-      },
-      {
-        date: '2025-04-20',
+        date: '2025-06-14',
         title: 'Amélioration des performances',
         description: 'Optimisation du temps de chargement et correction de plusieurs bugs mineurs.',
         link: '#'
@@ -381,15 +369,15 @@ if(document.querySelector('.nabvar-contain')){
         const div_update = document.createElement('div')
         div_update.className = "col mb-5"
         const title = document.createElement("h1")
-        title.className = "bg-light"
+        title.className = "bg-light px-3 rounded"
         title.innerHTML = `mise a jour ${update.date}`
         const card = document.createElement('div')
-        card.className = "card border-0"
+        card.className = "card border-0 mt-5"
         const card_title = document.createElement("h4")
-        card_title.className = "card-title"
+        card_title.className = "card-title px-3"
         card_title.innerHTML = `${update.title}`
         const div_body = document.createElement("div")
-        div_body.className = "card-body"
+        div_body.className = "card-body me-auto px-3"
         div_body.innerHTML = `${update.description}`
         card.appendChild(card_title)
         card.appendChild(div_body)
