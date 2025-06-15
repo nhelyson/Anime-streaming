@@ -426,7 +426,13 @@ if(document.querySelector('.nabvar-contain')){
         date: '2025-06-14',
         title: 'Amélioration des performances',
         description: 'Optimisation du temps de chargement et correction de plusieurs bugs mineurs.',
-        link: '#'
+        link: '1'
+      },
+       {
+        date: '2025-06-15',
+        title: "Ajout d'une section",
+        description: 'une section qui permet de connaitre les animes les mieux notes du moment',
+        link: '2'
       }
      ];
       const row = document.querySelector('.contain')
