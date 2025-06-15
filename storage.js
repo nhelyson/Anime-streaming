@@ -219,6 +219,71 @@ fetch(`https://kitsu.io/api/edge/${letter}?filter[status]=current&page[limit]=4&
     console.error("Erreur :", err);
   });
 
+  
+  fetch(`https://kitsu.io/api/edge/${letter}?page[limit]=4&sort=-averageRating`)
+  .then(res => res.json())
+  .then(data => {
+    const animes = data.data;
+    console.log(animes)
+    const btn =  document.getElementById("btn_Rat")
+    const row = document.getElementById("Rating");
+    row.innerHTML = "";
+    const button_view = document.createElement('button');
+    button_view.className = "btn btn-transparent text-end border-0 ms-auto me-2";
+    button_view.style.fontSize = "1rem"
+    button_view.style.width = "6rem";
+    button_view.textContent = "voir plus";
+
+    animes.forEach(anime => {
+      const div = document.createElement('div');
+      div.className = "col";
+
+      const card = document.createElement('div');
+      card.className = "card border-0";
+      card.style.cursor = "pointer";
+
+      const img = document.createElement('img');
+      img.className = "img-fluid img";
+      img.style.objectFit = "cover";
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.src = anime.attributes.posterImage?.large || "";
+      img.alt = anime.attributes.canonicalTitle;
+
+      const div_title = document.createElement('p');
+      div_title.className = "mt-3 fw-bold";
+      div.setAttribute("style", "font-size:0.9rem");
+      div_title.innerHTML = anime.attributes.canonicalTitle;
+
+      card.appendChild(img);
+      card.appendChild(div_title);
+      div.appendChild(card);
+      row.appendChild(div);
+
+      div.addEventListener("click", () => {
+        window.location.href = `manga_info.html?Anime_name=${encodeURIComponent(anime.attributes.canonicalTitle)}&id=${anime.id}&page=false`;
+      });
+    });
+
+    btn.appendChild(button_view);
+
+  button_view.addEventListener("click", function () {
+  row.innerHTML = "";
+  btn.remove()
+  passenger = 0; // on réinitialise pour partir de la première page
+  view(`https://kitsu.io/api/edge/${letter}?sort=-averageRating`, 
+       document.getElementById("Rating"),
+       document.getElementById("pagination_Rat"));
+      passenger = 1;
+    });
+
+  })
+  .catch(err => {
+    console.error("Erreur :", err);
+  });
+
+  
+
 }
 
 if(document.querySelector('.nabvar-contain')){
