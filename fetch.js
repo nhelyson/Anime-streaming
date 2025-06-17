@@ -388,6 +388,7 @@ fetch("https://graphql.anilist.co", {
     const video_trailer = document.querySelector('.trailer');
     const svg = document.getElementById("svg_Anime");
     let rank = data.data.Media.rankings 
+    let chuge = false
     if(rank.length > 0){
        svg.innerHTML = `Ranked: ${data.data.Media.rankings[0].rank}`
     }else{
@@ -401,6 +402,7 @@ fetch("https://graphql.anilist.co", {
     color:white!important;z-index:1000!important">trailer</p>`;
     video_trailer.style.cursor = "pointer";
     video_trailer.addEventListener("click", function() {
+      chuge = true
       const div =  document.createElement('div');          
       div.id= "iframe_contains"
       const iframe = document.createElement('div');
@@ -414,6 +416,7 @@ fetch("https://graphql.anilist.co", {
        const anime = data.data[0];
        div.innerHTML = "" 
        const iframe = document.createElement('div');
+       iframe.className = "trailer-dispear"
        iframe.setAttribute("style", "top:0!important; left:0!important;")
 
       iframe.innerHTML = iframe.innerHTML = iframe.innerHTML = `<iframe
@@ -447,6 +450,12 @@ fetch("https://graphql.anilist.co", {
       div.appendChild(iframe);
       document.body.appendChild(div);
     
+       div.addEventListener("click", function(event) {
+       if(div && div.contains(event.target)){
+        div.style.display = "none"
+       }
+       });
+
       });
 
       }
@@ -482,7 +491,15 @@ fetch("https://graphql.anilist.co", {
       div.style.transition = "all 0.3s ease-in-out";
       div.appendChild(iframe);
       document.body.appendChild(div);
+      
+      div.addEventListener("click", function(event) {
+       if(div && div.contains(event.target)){
+        div.style.display = "none"
+       }
+       });
+
     })
+    
 
     const news_anime = document.querySelector('.news-anime')
     news_anime.innerHTML = '<span class="ms-2 fw-bold">Details animes</span>'
