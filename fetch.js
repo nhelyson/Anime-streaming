@@ -177,8 +177,7 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
   .then(data => {
 
     const segments = data[0];
-
-    const traductionComplete = segments.map(segment => segment[0]).join(' ');
+     const traductionComplete = segments.map(segment => segment[0]).join(' ');
      let contain = ""
     if(traductionComplete ==="fini" ){
      contain = "Terminé"
@@ -194,7 +193,15 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
      status.style.fontStyle = "Asap"
      status.style.fontSize = "0.9rem"
     }
-   })
+
+    if(traductionComplete ==="prochain" ){
+     contain = "A venir"
+     status.innerHTML = `${contain} `
+     status.style.fontWeight = "bold"
+     status.style.fontStyle = "Asap"
+     status.style.fontSize = "0.9rem"
+    }
+  })
   .catch(error => {
     console.error("Erreur :", error);
     document.getElementById("resultat").inne = "Une erreur s'est produite.";
@@ -234,8 +241,9 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     let anime = Anime_search.attributes.abbreviatedTitles
      if(anime.length > 0){
      Anime_search.attributes.abbreviatedTitles.forEach(name => {
+  
+                                                       li.className = "p-1"
                      const li = document.createElement('li')
-                     li.className = "p-1"
                                       li.setAttribute('style', "font-size:0.8rem;text-align:justify;")
                                       li.style.width = "100%"
                                       li.innerHTML =`<br> ${name}`

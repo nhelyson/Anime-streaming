@@ -1,7 +1,4 @@
 if (document.getElementById("body_search")) {
-function audio(){
-  const audio = new audio()
-}
  let perPage = 20;
  let passenger = 0;
  let letter = "anime"
