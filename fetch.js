@@ -452,7 +452,7 @@ fetch("https://graphql.anilist.co", {
     
        div.addEventListener("click", function(event) {
        if(div && div.contains(event.target)){
-        div.style.display = "none"
+        div.remove()
        }
        });
 
@@ -494,7 +494,7 @@ fetch("https://graphql.anilist.co", {
       
       div.addEventListener("click", function(event) {
        if(div && div.contains(event.target)){
-        div.style.display = "none"
+        div.remove()
        }
        });
 
