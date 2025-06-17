@@ -172,7 +172,27 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
    const status  = document.getElementById("status");
    let cover ="";
    let status_text = Anime_search.attributes.status || "Statut indisponible"
-   status.innerHTML = `${status_text} `;
+   fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(status_text)}`)
+  .then(res => res.json())
+  .then(data => {
+
+    const segments = data[0];
+
+    const traductionComplete = segments.map(segment => segment[0]).join(' ');
+     let contain = ""
+    if(traductionComplete ==="fini" ){
+     contain = "TERMINÉ"
+    status.innerHTML = `${contain} `
+    }
+     if(traductionComplete ==="actuel" ){
+     contain = "EN COURS"
+    status.innerHTML = `${contain} `
+    }
+   })
+  .catch(error => {
+    console.error("Erreur :", error);
+    document.getElementById("resultat").inne = "Une erreur s'est produite.";
+  });
    
    if(Anime_search.attributes.coverImage === null){
     cover = Anime_search.attributes.posterImage.original;
@@ -208,9 +228,8 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     let anime = Anime_search.attributes.abbreviatedTitles
      if(anime.length > 0){
      Anime_search.attributes.abbreviatedTitles.forEach(name => {
-  
-                                                       li.className = "p-1"
                      const li = document.createElement('li')
+                     li.className = "p-1"
                                       li.setAttribute('style', "font-size:0.8rem;text-align:justify;")
                                       li.style.width = "100%"
                                       li.innerHTML =`<br> ${name}`
@@ -388,7 +407,6 @@ fetch("https://graphql.anilist.co", {
     const video_trailer = document.querySelector('.trailer');
     const svg = document.getElementById("svg_Anime");
     let rank = data.data.Media.rankings 
-    let chuge = false
     if(rank.length > 0){
        svg.innerHTML = `Ranked: ${data.data.Media.rankings[0].rank}`
     }else{

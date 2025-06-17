@@ -434,6 +434,13 @@ if(document.querySelector('.nabvar-contain')){
         description: 'une section qui permet de connaitre les animes les mieux notes du moment',
         link: '2'
       }
+      ,
+       {
+        date: '2025-06-15',
+        title: "Annonce",
+        description: "le site est encours de traduction donc si vous constate des changements c'est normale",
+        link: '3'
+      }
      ];
       const row = document.querySelector('.contain')
       updates.forEach(update =>{
