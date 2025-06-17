@@ -181,12 +181,18 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     const traductionComplete = segments.map(segment => segment[0]).join(' ');
      let contain = ""
     if(traductionComplete ==="fini" ){
-     contain = "TERMINÉ"
+     contain = "Terminé"
     status.innerHTML = `${contain} `
+    status.style.fontWeight = "bold"
+    status.style.fontStyle = "Asap"
+    status.style.fontSize = "0.9rem"
     }
      if(traductionComplete ==="actuel" ){
-     contain = "EN COURS"
-    status.innerHTML = `${contain} `
+     contain = "En cours"
+     status.innerHTML = `${contain} `
+     status.style.fontWeight = "bold"
+     status.style.fontStyle = "Asap"
+     status.style.fontSize = "0.9rem"
     }
    })
   .catch(error => {
