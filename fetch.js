@@ -434,8 +434,6 @@ fetch("https://graphql.anilist.co", {
         display: block !important;
       "
       ></iframe>`;
-
-      iframe.style.transition = "all 1s ease-in-out";
       div.style.position = "fixed";
       div.style.display = "flex";
       div.style.justifyContent = "center";
@@ -453,6 +451,7 @@ fetch("https://graphql.anilist.co", {
        div.addEventListener("click", function(event) {
        if(div && div.contains(event.target)){
         div.remove()
+        iframe.remove()
        }
        });
 
@@ -495,6 +494,7 @@ fetch("https://graphql.anilist.co", {
       div.addEventListener("click", function(event) {
        if(div && div.contains(event.target)){
         div.remove()
+        iframe.remove()
        }
        });
 
