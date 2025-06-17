@@ -450,8 +450,8 @@ fetch("https://graphql.anilist.co", {
     
        div.addEventListener("click", function(event) {
        if(div && div.contains(event.target)){
+        iframe.src = ""
         div.remove()
-        iframe.remove()
        }
        });
 
@@ -493,8 +493,8 @@ fetch("https://graphql.anilist.co", {
       
       div.addEventListener("click", function(event) {
        if(div && div.contains(event.target)){
+        iframe.src = ""
         div.remove()
-        iframe.remove()
        }
        });
 
