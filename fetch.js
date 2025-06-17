@@ -1,11 +1,5 @@
  if(document.getElementById("body_search")){
   let div = document.querySelector('.results');
-  /*div.className = "border rounded-3 mx-auto p-5 w-md-50 fs-5 shadow";
-  div.style.position = "relative";
-  div.style.top = "7rem";
-  div.style.width = "50rem";
-  div.innerHTML = "Recherche l'anime de votre choix"
- */
   function search(event) {
   const search_fetch = event.target.value;
   
@@ -241,9 +235,8 @@ fetch(`https://kitsu.io/api/edge/anime/${encodeURIComponent(id)}`)
     let anime = Anime_search.attributes.abbreviatedTitles
      if(anime.length > 0){
      Anime_search.attributes.abbreviatedTitles.forEach(name => {
-  
-                                                       li.className = "p-1"
                      const li = document.createElement('li')
+                                      li.className = "p-1"
                                       li.setAttribute('style', "font-size:0.8rem;text-align:justify;")
                                       li.style.width = "100%"
                                       li.innerHTML =`<br> ${name}`
