@@ -295,7 +295,7 @@ if(document.querySelector('.nabvar-contain')){
      const div = document.querySelector('.nabvar-contain')
      div.innerHTML = contain
 
-      //code pour l'historique de navigation
+  //code pour l'historique de navigation
   const hist = JSON.parse(localStorage.getItem('historique')) || [];
   const historique = document.getElementById("historique");
   const recept_hist = document.querySelector('.recept-hist');
@@ -422,6 +422,13 @@ if(document.querySelector('.nabvar-contain')){
 
     if(document.getElementById("news")){
         const updates = [  
+       {
+        date: '2025-10-31',
+        title: 'Annonce importante',
+        description: 'Salut les filles , je vous annonce que kotsu va devenir un site de streaming donc si vous avez des suggestions voici mon numero : 069420972',
+        image: "",
+        link: '1'
+      },
       {
         date: '2025-06-14',
         title: 'Amélioration des performances',
@@ -441,21 +448,29 @@ if(document.querySelector('.nabvar-contain')){
         description: "le site est encours de traduction donc si vous constate des changements c'est normale",
         link: '3'
       }
+      ,
+      {
+        date: '2025-06-25',
+        title: "Annonce",
+        description: "le site rentre dans sa phrase de changement de nouvelle fonctionnalite arrive prepare vous",
+        link: '4'
+      }
+      
      ];
       const row = document.querySelector('.contain')
       updates.forEach(update =>{
         const div_update = document.createElement('div')
-        div_update.className = "col mb-5 bg-light p-4 rounded"
+        div_update.className = "col mb-5 bg-dark p-4 rounded"
         const title = document.createElement("h2")
         title.className = "px-3 rounded text-secondary p-4"
         title.innerHTML = `mise a jour ${update.date}`
         const card = document.createElement('div')
-        card.className = "card border-0 mt-5 p-4 bg-light"
+        card.className = "card border-0 mt-5 p-4 bg-dark"
         const card_title = document.createElement("h4")
-        card_title.className = "card-title px-2"
+        card_title.className = "card-title px-2 text-white"
         card_title.innerHTML = `${update.title}`
         const div_body = document.createElement("div")
-        div_body.className = "card-body me-auto px-3"
+        div_body.className = "card-body me-auto px-3 text-white"
         div_body.innerHTML = `${update.description}`
         card.appendChild(card_title)
         card.appendChild(div_body)
